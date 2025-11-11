@@ -128,7 +128,7 @@ int main(int argc, const char * argv[]) {
         for (i = 1; i <= N; i++) for (k = 1; k <= N_DIMS; k++) v[i][k] += a[i][k] * dt;
 
         //	Calcula as paredes
-        vL[1] = 4.0 * cos(freq * t);
+        vL[1] = 2.5 * cos(freq * t);
         for (k = 1; k <= N_DIMS; k++)
         {
             L[k] = L[k] + vL[k] * dt;
@@ -138,13 +138,13 @@ int main(int argc, const char * argv[]) {
         for (i = 1; i <= N; i++) {
             //	Paredes
             for (k = 1; k <= N_DIMS; k++) {
-                if(r[i][k] >= L[k] && v[i][k] >= 0.0){
-                    r[i][k] = L[k] - 1e-9;
+                if(r[i][k] >= L[k] && v[i][k] > 0.0){
+                    if (r[i][k] > L[k]) r[i][k] = L[k] - 1e-3;
                     v[i][k] = (-1) * v[i][k] + vL[k];
                     dp_p[k] += -m[i] * 2.0 * v[i][k];
                 }
                 if(r[i][k] <= 0.0) {
-                    r[i][k] = 1e-9;
+                    if (r[i][k] < 0.0) r[i][k] = 1e-3;
                     v[i][k] = (-1) * v[i][k];
                     dp_n[k] += -m[i] * 2.0 * v[i][k];
                 }
