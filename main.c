@@ -71,6 +71,9 @@ int main(int argc, const char * argv[]) {
 
     freq = 2.0 * M_PI / periodo;
 
+    vL[1] = 0.0;
+    vL[2] = 0.0;
+
     f = 0;
     f2 = 0;
     for (i = 1; i <= N; i++) {
@@ -131,6 +134,7 @@ int main(int argc, const char * argv[]) {
         vL[1] = 2.5 * cos(freq * t);
         for (k = 1; k <= N_DIMS; k++)
         {
+            if (t > (3.0 * t_fim / 4.0 )) vL[k] = 0.0;
             L[k] = L[k] + vL[k] * dt;
         }
 
